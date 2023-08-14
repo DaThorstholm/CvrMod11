@@ -63,13 +63,16 @@ public class Mod11Test
     [Fact]
     public void EzToRemember()
     {
-        var value = "11123889";
-            
-        if (Mod11.EazyToRemember(value) == 3)
-        {
-            _testOutputHelper.WriteLine(value);
-        }
-        
-        
+        const string value = "11122889";
+
+        Mod11.EazyToRemember(value).Should().Be(3);
+    }
+    
+    [Fact]
+    public void Reversible()
+    {
+        const string value = "12344321";
+
+        Mod11.Reversible(value).Should().Be(true);
     }
 }
