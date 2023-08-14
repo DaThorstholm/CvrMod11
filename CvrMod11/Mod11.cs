@@ -40,11 +40,11 @@ public static class Mod11
         return controlDigit == numberAsArray[^1];
     }
 
-    public static int EazyToRemember(string str)
+    public static bool EazyToRemember(string str)
     {
         var digits = new List<Digit>();
         
-        var distinctChars = str.Distinct();
+        var distinctChars = str.Distinct().ToList();
         foreach (var c in distinctChars)
         {
             var digit = new Digit
@@ -56,16 +56,10 @@ public static class Mod11
             
             digits.Add(digit);
         }
-
-        var lvl1 = digits.Count(s => s.Concurrent >= 2 || s.Occurrence >= 2) == 2;
-        var lvl2 = digits.Count(s => s.Concurrent >= 2 || s.Occurrence >= 2) > 2;
-        var lvl3 = digits.Count(s => s.Concurrent >= 3 || s.Occurrence >= 3) == 2;
         
-        return 
-            lvl3 ? 3 :
-            lvl2 ? 2 :
-            lvl1 ? 1 : 
-            0;
+        var concurrent = digits.Max(s => s.Concurrent);
+        var occurrence = digits.Max(s => s.Occurrence);
+        return concurrent + occurrence > 5 || distinctChars.Count < 6;
     }
 
     public static bool Reversible(string s)
@@ -97,7 +91,7 @@ public static class Mod11
             }
             else
             {
-                current = 0;
+                current = 1;
             }
 
             previousChar = t;

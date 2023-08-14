@@ -33,7 +33,7 @@ public class Mod11Test
     public void Test1()
     {
         var mod11Legit = 0;
-        var ezCount = new []{0, 0, 0, 0};
+        var ezCount = 0;
         var reversible = 0;
         for (var i = 99999; i < 99999999; i++)
         {
@@ -44,7 +44,14 @@ public class Mod11Test
                 mod11Legit++;
 
                 var ez = Mod11.EazyToRemember(value);
-                ezCount[ez]++;
+                if (ez)
+                {
+                    ezCount++;
+                }
+                else
+                {
+                    _testOutputHelper.WriteLine(value);
+                }
                 
                 if (Mod11.Reversible(value))
                 {
@@ -53,22 +60,18 @@ public class Mod11Test
             }
         }
         
-        _testOutputHelper.WriteLine(mod11Legit.ToString());
-        foreach (var i in ezCount)
-        {
-            _testOutputHelper.WriteLine($"ezCount {i}");    
-        }
-        
-        _testOutputHelper.WriteLine(reversible.ToString());
+        _testOutputHelper.WriteLine($"legit {mod11Legit}");
+        _testOutputHelper.WriteLine($"ezCount {ezCount}");
+        _testOutputHelper.WriteLine($"reversible {reversible}");
     }
     
     [Theory]
-    [InlineData("11234567", 0)]
-    [InlineData("11234566", 1)]
-    [InlineData("11122889", 2)]
-    [InlineData("11223344", 2)]
-    [InlineData("00022333", 3)]
-    public void EzToRemember(string value, int ez)
+    [InlineData("11234567", false)]
+    [InlineData("11234566", true)]
+    [InlineData("11122889", true)]
+    [InlineData("11223344", true)]
+    [InlineData("00022333", true)]
+    public void EzToRemember(string value, bool ez)
     {
         Mod11.EazyToRemember(value).Should().Be(ez);
     }
