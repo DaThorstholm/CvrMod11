@@ -26,12 +26,11 @@ public static class Mod11
     private static bool CheckMod11(IReadOnlyList<int> numberAsArray) 
     {
         var cvrMod11Factors = new [] { 2, 7, 6, 5, 4, 3, 2 };
-
+        
         var sum = 0;
         for (var i = 0; i < 7; i++)
         {
-            var mul = numberAsArray[i] * cvrMod11Factors[i];
-            sum += mul;
+            sum += numberAsArray[i] * cvrMod11Factors[i];
         }
 
         var mod11Value = sum % 11;
