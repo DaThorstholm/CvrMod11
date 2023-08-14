@@ -56,8 +56,16 @@ public static class Mod11
             
             digits.Add(digit);
         }
+
+        var lvl1 = digits.Count(s => s.Concurrent >= 2 || s.Occurrence >= 2) == 2;
+        var lvl2 = digits.Count(s => s.Concurrent >= 2 || s.Occurrence >= 2) > 2;
+        var lvl3 = digits.Count(s => s.Concurrent >= 3 || s.Occurrence >= 3) == 2;
         
-        return digits.Count(s => s.Concurrent >= 2 || s.Occurrence >= 2);
+        return 
+            lvl3 ? 3 :
+            lvl2 ? 2 :
+            lvl1 ? 1 : 
+            0;
     }
 
     public static bool Reversible(string s)
